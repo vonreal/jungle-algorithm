@@ -4,38 +4,35 @@
 import sys
 input = sys.stdin.readline
 
-city_cnt = int(input())
-city_costs = [[int(i) for i in input().split()] for _ in range(city_cnt)]
+N = int(input())
+cityCosts = [[int(cost) for cost in input().split()] for _ in range(N)]
 
-total = float('inf')
+minimumCost = float('inf')
 
-def backtrack(start, visited_city, cost):
-    global total
+def backtrak(start, visitedCity, cost):
+    global minimumCost
 
-    if total <= cost:
+    if minimumCost <= cost: # 비용이 minimumCost보다 크거나 같으면 검사하지 않아도 됨
         return
 
-    if city_cnt == len(visited_city):
-        if city_costs[start][0] == 0: # 돌아갈 길 없음
-            return
-        final_cost = cost + city_costs[start][0]
-
-        if total > final_cost:
-            total = final_cost
+    if N == len(visitedCity):
+        if minimumCost > (totalCost := cost + cityCosts[start][0]): # 처음 도시로 돌아가는 비용
+            minimumCost = totalCost
         return
     
-    for next_city in range(city_cnt):
-        if next_city in visited_city:
+    for nextCity in range(N):
+        if nextCity in visitedCity:
             continue
-        if city_costs[start][next_city] == 0:
+        if cityCosts[start][nextCity] == 0: # 갈 수 없는 경우
             continue
 
-        visited_city.add(next_city)
-        backtrack(next_city, visited_city, cost + city_costs[start][next_city])
-        visited_city.remove(next_city)
+        visitedCity.add(nextCity)
+        backtrak(nextCity, visitedCity, cost + cityCosts[start][nextCity])
+        visitedCity.remove(nextCity)
+    
+backtrak(0, {0}, 0)
 
-backtrack(0, {0}, 0)
-print(total)
+print(minimumCost)
 
 '''
 [Algorithm Design Canvas]
