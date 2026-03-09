@@ -21,28 +21,3 @@ def answer(n, under_scores):
     print(f'{under_scores}라고 답변하였지.')
 
 answer(N, '')
-
-
-'''
-[Algorithm Design Canvas]
-전제조건: Python 사용, 1초 10^7 연산 기준 (1000만번)
-
-1. Constraints
-    1) 입력범위
-        -> N: 재귀 횟수 (1~50)
-    2) 출력범위
-        -> 문자열을 출력해야함
-    3) Brute Force 가능한가?
-        -> 가능
-
-2. Ideas
-    1) s를 하나씩 읽으면서 출력은 r번 반복한다.
-
-3. Complexities
-    Idea 1) 시간복잡도: O(r x s) -> 근데 최대가 160이기 때문에 거의 O(1), 공간복잡도: O(1) 선언하는 변수 없음.
-
-4. Code
-5. Test
-
-6. 개선 포인트 with AI
-'''
