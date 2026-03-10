@@ -7,16 +7,11 @@ N = int(input())
 
 count = 0
 
-def existedDiagonal(row, col, selected_col):
-    if not selected_col:
-        return False
-    
-    for row2, col2 in enumerate(selected_col):
-        if abs(row-row2) == abs(col-col2):
-            return True
-    return False
+col_set = set()
+diag1 = set() # row - col
+diag2 = set() # row + col
 
-def backtrack(row, selected_col):
+def backtrack(row):
     global count
 
     if N == row:
@@ -24,17 +19,26 @@ def backtrack(row, selected_col):
         return
     
     for col in range(N):
-        if col in selected_col:
-            continue
-        
-        if existedDiagonal(row, col, selected_col):
+        if col in col_set:
             continue
 
-        selected_col.append(col)
-        backtrack(row + 1, selected_col)
-        selected_col.pop()
+        if (row - col) in diag1:
+            continue
 
-backtrack(0, [])
+        if (row + col) in diag2:
+            continue
+
+        col_set.add(col)
+        diag1.add(row - col)
+        diag2.add(row + col)
+
+        backtrack(row + 1)
+
+        col_set.remove(col)
+        diag1.remove(row - col)
+        diag2.remove(row + col)
+
+backtrack(0)
 print(count)
 
 '''
