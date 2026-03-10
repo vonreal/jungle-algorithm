@@ -1,5 +1,6 @@
 # 백트래킹 - N-Queen (백준 골드4)
 # 문제 링크: https://www.acmicpc.net/problem/9663
+
 import sys
 input = sys.stdin.readline
 
@@ -7,9 +8,9 @@ N = int(input())
 
 count = 0
 
-col_set = set()
-diag1 = set() # row - col
-diag2 = set() # row + col
+col_used = [False] * N
+diag1_used = [False] * (2 * N - 1) # row + col
+diag2_used = [False] * (2 * N - 1) # row - col + (N - 1) (인덱스에 음수를 쓰지 않도록 (N - 1) 만큼 밀어준다.)
 
 def backtrack(row):
     global count
@@ -19,24 +20,19 @@ def backtrack(row):
         return
     
     for col in range(N):
-        if col in col_set:
+        if col_used[col]:
             continue
 
-        if (row - col) in diag1:
+        if diag1_used[row + col] or diag2_used[row - col + (N - 1)]:
             continue
 
-        if (row + col) in diag2:
-            continue
-
-        col_set.add(col)
-        diag1.add(row - col)
-        diag2.add(row + col)
-
+        col_used[col] = True
+        diag1_used[row + col] = True
+        diag2_used[row - col + (N - 1)] = True
         backtrack(row + 1)
-
-        col_set.remove(col)
-        diag1.remove(row - col)
-        diag2.remove(row + col)
+        col_used[col] = False
+        diag1_used[row + col] = False
+        diag2_used[row - col + (N - 1)] = False
 
 backtrack(0)
 print(count)
