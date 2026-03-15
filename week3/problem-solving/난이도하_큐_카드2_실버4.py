@@ -5,7 +5,7 @@ from collections import deque
 input = sys.stdin.readline
 
 N = int(input())
-cards = deque([n for n in range(1, N + 1)])
+cards = deque(range(1, N+1))
 
 while len(cards) > 1:
     cards.popleft()
@@ -32,7 +32,7 @@ print(cards.pop())
     1) deque 사용
 
 3. Complexity
-    1) deque의 PopLeft(), pop()은 O(1)
+    1) deque의 PopLeft(), pop()은 O(1) 시간복잡도는 O(N), 공간복잡도 O(N)
 
 
 '''
