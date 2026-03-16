@@ -11,7 +11,7 @@ while len(cards) > 1:
     cards.popleft()
     cards.append(cards.popleft())
 
-print(cards.pop())
+print(cards[0])
 
 '''
 동작
