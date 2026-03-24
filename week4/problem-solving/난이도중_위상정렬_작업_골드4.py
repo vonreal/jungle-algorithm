@@ -18,24 +18,24 @@ for i in range(1, N+1):
         adj_list[datas[j]].append(i)
 
 # 선행차수가 0인것부터 동시 실행(작업시간이 더 큰 것으로 산정해서 계산)
-q = deque([i for i in range(1, N+1) if indegrees[i] == 0])
-
-# 여기서 28번째 코드에서 큐에 들어간값 중 시간이 가장 큰 것으로 계산,나머지는 합치지 않음. 으로 생각했는데 힌트에 가까움?
-task_total = 0
 end_time = [0] * (N+1)
-end_time.append(task_times[1])
+q = deque()
+
+for i in range(1, N+1):
+    if indegrees[i] == 0:
+        end_time[i] = task_times[i]
+        q.append(i)
+
 while q:
     task = q.popleft()
-    if not q:
-        task_total += max(end_time)
-        end_time = []
     for adj_task in adj_list[task]:
+        end_time[adj_task] = max(end_time[adj_task], end_time[task])
         indegrees[adj_task] -= 1
         if indegrees[adj_task] == 0:
+            end_time[adj_task] += task_times[adj_task]
             q.append(adj_task)
-            end_time.append(task_times[adj_task])
 
-print(task_total)
+print(max(end_time))
 
 
 
