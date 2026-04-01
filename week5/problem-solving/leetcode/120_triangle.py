@@ -1,14 +1,12 @@
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
-        dp = [0] * (len(triangle) + 1)
+        dp = triangle[-1][:]  # 맨 아래 행으로 초기화
 
-        dp[0] = triangle[0][0]
+        for j in range(len(triangle) - 2, -1, -1):      # 아래에서 위로
+            for i in range(len(triangle[j])):
+                dp[i] = triangle[j][i] + min(dp[i], dp[i + 1])
 
-        for j in range(len(triangle) - 1):
-            for i in range(len(triangle[j+1]) - 1):      
-                dp[j+1] = min(triangle[j+1][i], triangle[j+1][i+1])
-
-        return sum(dp)
+        return dp[0]
 
 '''
 위에서 아래로 내려갈때 합의 최소를 구해라?
